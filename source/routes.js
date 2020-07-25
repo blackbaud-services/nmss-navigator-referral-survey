@@ -5,7 +5,7 @@ import Home from './components/routes/Home'
 import Root from './components/routes/Root'
 
 export default (
-  <Route path='/' component={Root}>
+  <Route path='/:token' component={Root}>
     <IndexRoute component={Home} />
   </Route>
 )

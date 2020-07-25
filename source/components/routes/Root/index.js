@@ -18,10 +18,9 @@ const SiteContainer = ({
 }) => {
   const [status, setStatus] = useState('fetching')
   useEffect(() => {
-    console.log(window, 'window')
     Promise.resolve()
-      // .then(() => token && getAuth(token))
-      // .then(auth => fetchSurvey(token === 'null' ? { sso_auth_token: auth } : { auth }))
+      .then(() => token && getAuth(token))
+      .then(auth => fetchSurvey(token === 'null' ? { sso_auth_token: auth } : { auth }))
       .then(() => setStatus('fetched'))
       .catch(() => setStatus('failed'))
   }, [])

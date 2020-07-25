@@ -33,7 +33,7 @@ export default ({ assets, ...props }) => {
     return app(currentPath)
   }
 
-  serverApp.staticRoutes = ['/']
+  serverApp.staticRoutes = []
 
   return serverApp
 }
