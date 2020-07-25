@@ -17,6 +17,9 @@ const SiteContainer = ({
   routeParams: { token }
 }) => {
   const [status, setStatus] = useState('fetching')
+  console.log(window)
+  const iframe = parent.document.getElementsByTagName('iframe')
+  console.log(iframe)
   useEffect(() => {
     Promise.resolve()
       .then(() => token && getAuth(token))
