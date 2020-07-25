@@ -16,7 +16,7 @@ const SiteContainer = ({
   getAuth
 }) => {
   const [status, setStatus] = useState('fetching')
-  const token = window !== 'undefined' ? window.frames.frameElement.dataset.token : null
+  const token = typeof window === 'undefined' ? null : window.frames.frameElement.dataset.token
   useEffect(() => {
     Promise.resolve()
       .then(() => token && getAuth(token))
