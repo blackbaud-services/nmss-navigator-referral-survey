@@ -1,0 +1,40 @@
+{
+  "name": "nmss-navigator-referral-survey",
+  "version": "1.0",
+  "description": "",
+  "main": "source/client.js",
+  "scripts": {
+    "start": "yarn start:backend | yarn start:frontend",
+    "start:backend": "rm -rf dist && NODE_ENV=production brb serve --config='./webpack.shared.config' --port=3000",
+    "start:frontend": "brb serve --config='./webpack.shared.config'",
+    "build": "NODE_ENV=production brb build --config='./webpack.shared.config' --base-path=$BASE_PATH",
+    "build:prod": "ENV_FILE=.env.production yarn run build",
+    "build:path": "BASE_PATH='/nmss-navigator-referral-survey/' yarn build",
+    "deploy": "yarn build:path brb deploy --target=gh-pages",
+    "lint": "brb lint",
+    "lint:fix": "prettier-standard 'source/**/*.js'"
+  },
+  "author": "Blackbaud Services",
+  "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "boiler-room-builder": "4.0.7",
+    "boiler-room-runner": "^2.1.0",
+    "constructicon": "^2.8.1",
+    "dotenv-webpack": "^1.4.1",
+    "es6-promise": "^4.0.5",
+    "lodash": "^4.17.0",
+    "minimal.css": "^1.0.1",
+    "prettier-standard": "^16.4.1",
+    "qs": "^6.9.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^5.2.0",
+    "react-router": "^3.0.5",
+    "redux-thunk": "^2.2.0",
+    "route-parser": "^0.0.5",
+    "supporticon": "^3.49.11"
+  },
+  "devDependencies": {
+    "redux-logger": "^2.8.1"
+  }
+}
