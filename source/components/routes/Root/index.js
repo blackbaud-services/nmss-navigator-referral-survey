@@ -13,13 +13,10 @@ import TraitsProvider from 'constructicon/traits-provider'
 const SiteContainer = ({
   children,
   fetchSurvey,
-  getAuth,
-  routeParams: { token }
+  getAuth
 }) => {
   const [status, setStatus] = useState('fetching')
-  console.log(window)
-  const iframe = document.getElementsByTagName('iframe')
-  console.log(iframe)
+  const token = window !== 'undefined' ? window.frames.frameElement.dataset.token : null
   useEffect(() => {
     Promise.resolve()
       .then(() => token && getAuth(token))
