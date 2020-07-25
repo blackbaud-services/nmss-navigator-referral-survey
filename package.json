@@ -11,7 +11,7 @@
     "build:staging": "BASE_PATH='/nmss-navigator-referral-survey/' yarn build",
     "build:prod": "ENV_FILE=.env.production yarn build",
     "deploy:staging": "yarn build:staging && brb deploy --target='gh-pages'",
-    "deploy:prod": "yarn build:pro && brb deploy --target s3 --bucket blackbaud-sites.com --prefix nmss-referral-survey.blackbaud-sites.com",
+    "deploy:prod": "yarn build:prod && brb deploy --target s3 --bucket blackbaud-sites.com --prefix nmss-referral-survey.blackbaud-sites.com",
     "lint": "brb lint",
     "lint:fix": "prettier-standard 'source/**/*.js'"
   },
