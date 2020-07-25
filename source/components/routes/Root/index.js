@@ -17,11 +17,11 @@ const SiteContainer = ({
   getAuth
 }) => {
   const [status, setStatus] = useState('fetching')
-  const token = typeof window === 'undefined' ? null : get(window, 'frames.frameElement.dataset.token')
-  if (typeof window !== 'undefined') {
-    console.log(window, 'window')
-  }
   useEffect(() => {
+    const token = typeof window === 'undefined' ? null : get(window, 'name')
+    if (typeof window !== 'undefined') {
+      console.log(window, 'window')
+    }
     Promise.resolve()
       .then(() => token && getAuth(token))
       .then(auth => fetchSurvey(token === 'null' ? { sso_auth_token: auth } : { auth }))
