@@ -18,7 +18,7 @@ const SiteContainer = ({
 }) => {
   const [status, setStatus] = useState('fetching')
   console.log(window)
-  const iframe = parent.document.getElementsByTagName('iframe')
+  const iframe = document.getElementsByTagName('iframe')
   console.log(iframe)
   useEffect(() => {
     Promise.resolve()
