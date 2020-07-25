@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
 import * as traits from '../../../lib/traits'
 import { getAuth, fetchSurvey } from '../../../store'
 
@@ -16,7 +17,10 @@ const SiteContainer = ({
   getAuth
 }) => {
   const [status, setStatus] = useState('fetching')
-  const token = typeof window === 'undefined' ? null : window.frames.frameElement.dataset.token
+  const token = typeof window === 'undefined' ? null : get(window,'frames.frameElement.dataset.token')
+  if(typeof window !== 'undefined') {
+    console.log(window, 'window')
+  }
   useEffect(() => {
     Promise.resolve()
       .then(() => token && getAuth(token))
