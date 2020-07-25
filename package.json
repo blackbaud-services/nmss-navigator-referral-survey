@@ -10,7 +10,7 @@
     "build": "NODE_ENV=production brb build --config='./webpack.shared.config' --base-path=$BASE_PATH",
     "build:prod": "ENV_FILE=.env.production yarn run build",
     "build:path": "BASE_PATH='/nmss-navigator-referral-survey/' yarn build",
-    "deploy": "yarn build:path brb deploy --target=gh-pages",
+    "deploy": "yarn build:path && brb deploy --target='gh-pages'",
     "lint": "brb lint",
     "lint:fix": "prettier-standard 'source/**/*.js'"
   },
