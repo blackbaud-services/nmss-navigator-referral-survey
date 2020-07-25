@@ -17,8 +17,8 @@ const SiteContainer = ({
   getAuth
 }) => {
   const [status, setStatus] = useState('fetching')
-  const token = typeof window === 'undefined' ? null : get(window,'frames.frameElement.dataset.token')
-  if(typeof window !== 'undefined') {
+  const token = typeof window === 'undefined' ? null : get(window, 'frames.frameElement.dataset.token')
+  if (typeof window !== 'undefined') {
     console.log(window, 'window')
   }
   useEffect(() => {
