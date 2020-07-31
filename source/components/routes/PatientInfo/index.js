@@ -12,7 +12,15 @@ const PatientInfo = ({ nextUrl, page, router, setModel }) => {
       .then(() => router.push(nextUrl))
       .catch(() => setErrors(['Please fill out all required fields']))
 
-  return <FormTemplate {...page} onSuccess={handleUpdate} errors={errors} />
+  return (
+    <FormTemplate
+      {...page}
+      {...router}
+      onSuccess={handleUpdate}
+      errors={errors}
+      prevUrl='/additional-info'
+    />
+  )
 }
 
 const mapStateToProps = ({ survey, formState }) => ({

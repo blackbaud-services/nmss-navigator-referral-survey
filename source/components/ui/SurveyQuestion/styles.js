@@ -112,23 +112,7 @@ export default (
           },
 
           field: {
-            backgroundImage: 'inherit',
-            backgroundColor: colors.light,
-            borderColor: colors.lightGrey,
-            borderRadius: rhythm(radiuses.small),
-            boxShadow: 'none',
-            padding: `${rhythm(0.25)} ${rhythm(0.5)}`,
-            paddingLeft: currency ? rhythm(2.125) : phone && rhythm(3.75),
-            height: rhythm(1.75),
-            lineHeight: rhythm(1.25),
-            appearance: 'none',
-
-            '&:focus': {
-              backgroundColor: colors.light,
-              borderColor: colors.lightGrey,
-              boxShadow: 'none'
-            },
-
+            ...treatments.input,
             '&::-webkit-input-placeholder': { color: colors.grey },
             '&::-mox-placeholder': { color: colors.grey },
             '&:-ms-input-placeholder': { color: colors.grey },

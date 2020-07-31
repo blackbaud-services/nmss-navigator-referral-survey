@@ -31,7 +31,7 @@ export const treatments = {
     backgroundImage: 'inherit',
     borderRadius: '3px',
     boxShadow: '1px 1px 1px rgba(0, 0, 0, .15) inset',
-    border: '1px solid #ccc',
+    border: '1px solid #aec0c6',
     padding: '10px',
     fontSize: '13px',
     verticalAlign: 'middle',

@@ -16,6 +16,7 @@ const Preferences = ({ page, router, setModel }) => {
   return (
     <FormTemplate
       {...page}
+      {...router}
       onSuccess={handleUpdate}
       errors={errors}
       prevUrl='/provider-info'

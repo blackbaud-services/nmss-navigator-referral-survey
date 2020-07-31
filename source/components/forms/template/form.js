@@ -1,9 +1,9 @@
 import { deserializeQuestions } from '../../../lib/form'
 
-export default ({ questions, formState }) => {
+export default (props) => {
   return {
     fields: {
-      ...deserializeQuestions(questions, formState)
+      ...deserializeQuestions(props)
     }
   }
 }

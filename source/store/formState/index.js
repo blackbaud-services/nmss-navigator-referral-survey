@@ -4,8 +4,8 @@ const c = {
   SET_ADDRESS: 'app/formState/SET_ADDRESS'
 }
 
-export const setModel = data => dispatch =>
-  dispatch({ type: c.SET_MODEL, payload: data })
+export const setModel = (data, { location: { pathname } }) => dispatch =>
+  dispatch({ type: c.SET_MODEL, payload: { [pathname]: data } })
 
 export const setInfo = data => dispatch => {
   const props = {

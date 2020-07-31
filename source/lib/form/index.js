@@ -3,7 +3,7 @@ import PhoneNumber from 'awesome-phonenumber'
 import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 import keyBy from 'lodash/keyBy'
-import find from 'lodash/find'
+import { findQuestion } from '../../lib/survey'
 
 export const formatError = error => {
   switch (error.status) {
@@ -56,8 +56,9 @@ export const customValidators = {
   phone: msg => val => val && isPhoneInvalid(val) && msg
 }
 
-export const deserializeQuestions = (questions, formState) => {
-  console.log(formState)
+export const deserializeQuestions = ({ formState, location, questions }) => {
+  const { pathname } = location
+  const model = get(formState, `model[${pathname}]`)
   const questionsArray = questions.map(
     ({
       questionId,
@@ -71,18 +72,10 @@ export const deserializeQuestions = (questions, formState) => {
         questionTypeData,
         'surveyQuestionData.availableAnswer'
       )
-      const isPhone = ['409285'].indexOf(questionId) !== -1
-      const isEmail = ['409286'].indexOf(questionId) !== -1
-      const initialVal =
-        formState &&
-        formState.model &&
-        find(formState.model, i => {
-          console.log(i, i[`${questionId}`])
-          if (i[`${questionId}`] === questionId) {
-            return i
-          }
-        })
-      // console.log(initialVal)
+      const map = findQuestion(location, questionId)
+      const isPhone = map && map.question === 'phone'
+      const isEmail = map && map.question === 'email'
+      const initialVal = model && model[`${questionId}`]
       return {
         label: questionText,
         type: questionType,

@@ -1,7 +1,7 @@
 import merge from 'lodash/merge'
 
 export default (
-  { align, bottomMargin, size, spacing, styles },
+  { align, size, spacing, styles },
   { calculateSpacing, colors, rhythm, scale, treatments }
 ) => {
   const headingStyles = fontSize => ({
@@ -13,19 +13,17 @@ export default (
 
   const baseStyles = {
     fontSize: size ? scale(size) : scale(0.25),
+    lineHeight: 1.4,
     textAlign: align,
     ...calculateSpacing(spacing),
     '& h2': headingStyles(2.5),
-    '& h3': headingStyles(2),
-    '& h4': headingStyles(1.5),
+    '& h3': headingStyles(1.5),
+    '& h4': headingStyles(1.25),
     '& h5': headingStyles(1),
     '& h6': headingStyles(0.5),
     '& > span > p': {
       marginBottom: rhythm(0.5),
       lineHeight: 1.4
-    },
-    '& > span > :last-child': {
-      marginBottom: bottomMargin ? rhythm(0.75) : 0
     },
     '& a': {
       color: colors.primary,

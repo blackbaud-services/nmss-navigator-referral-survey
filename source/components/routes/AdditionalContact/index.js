@@ -10,11 +10,17 @@ const AdditionalContact = ({ page, router, setModel, setInfo }) => {
       .then(() => setModel(data))
       .then(() => setInfo(data))
 
-  return <FormTemplate {...page} onSuccess={handleUpdate} />
+  return (
+    <FormTemplate
+      {...page}
+      {...router}
+      onSuccess={handleUpdate}
+    />
+  )
 }
 
 const mapStateToProps = ({ formState, survey }) => ({
-  page: get(survey, 'pages[2]'),
+  page: get(survey, 'pages[4]'),
   prevUrl: get(formState, 'additionalInfo.showPatientInfo')
     ? '/patient-info'
     : '/additional-info'

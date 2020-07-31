@@ -1,8 +1,3 @@
-/*
-    ryoAPI Survey styles
-*/
-/* Error styling for invalid fields. */
-/* Override Mozilla's arbitrary invalid definitions. */
 *:-moz-ui-invalid {
     box-shadow: none;
 }
@@ -21,27 +16,16 @@ input[type="radio"].invalid {
                 1px -1px 1px #ff0000
 }
 
-/* Base form styles from www.nationalmssociety.org.
-input, textarea, select {
-    border-radius: 3px !important;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.15) inset !important;;
-    border: 1px solid #ccc !important;;
-    padding: 10px !important;;
-    font-size: 13px !important;;
-    vertical-align: middle !important;
-    line-height: 1 !important;
-}
-*/
-
+/* Base form styles from www.nationalmssociety.org */
 input, input:valid, input:invalid:focus,
 textarea, textarea:valid, textarea:invalid:focus {
-    background-image: linear-gradient(to bottom, #ffffff 0%, #f7f6f3 100%) !important;;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #f7f6f3 100%) !important;
 }
 select, select:valid, select:invalid:focus {
     background-image: url('https://www.nationalmssociety.org/App_Themes/MSNational/Images/fs-selecter-arrow.png'), linear-gradient(to bottom, #ffffff 0%, #f7f6f3 100%) !important;
     background-repeat: no-repeat, repeat !important;;
     background-position: right 0 top 50%, 0 0 !important;;
-    background-size: 32px auto, 100% !important;;
+    background-size: 40px auto, 100% !important;;
     -moz-appearance: none; /* Hide default select arrow */
     -webkit-appearance: none;
     appearance: none;

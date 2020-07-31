@@ -15,6 +15,7 @@ const ProviderInfo = ({ prevUrl, page, router, setModel }) => {
   return (
     <FormTemplate
       {...page}
+      {...router}
       onSuccess={handleUpdate}
       errors={errors}
       prevUrl={prevUrl}
