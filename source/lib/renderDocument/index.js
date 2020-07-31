@@ -23,8 +23,14 @@ export const Document = ({
       {head.link.toComponent()}
       {head.script.toComponent()}
       {head.style.toComponent()}
-      <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet' type='text/css' />
-      <link rel='stylesheet' href='https://secure.nationalmssociety.org/assets/Styles/MSNational/main2015.css' />
+      <link
+        href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet'
+        type='text/css'
+      />
+      <link
+        rel='stylesheet'
+        href='https://secure.nationalmssociety.org/assets/Styles/MSNational/main2015.css'
+      />
       {styles.map((style, index) => (
         <link key={index} rel='stylesheet' href={style} />
       ))}
@@ -52,7 +58,8 @@ export const renderDocument = ({
   const styles = assets.filter(asset => asset.match(/\.css$/))
   const scripts = assets.filter(asset => asset.match(/\.js$/))
 
-  return '<!doctype html>' +
+  return (
+    '<!doctype html>' +
     renderToStaticMarkup(
       createElement(DocumentComponent, {
         head: Helmet.rewind(),
@@ -62,6 +69,7 @@ export const renderDocument = ({
         state
       })
     )
+  )
 }
 
 export const loadScript = (url, callback) => {

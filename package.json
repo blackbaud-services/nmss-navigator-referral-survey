@@ -14,6 +14,7 @@
   },
   "author": "Blackbaud Services",
   "dependencies": {
+    "awesome-phonenumber": "^2.36.0",
     "babel-eslint": "^10.0.1",
     "boiler-room-builder": "4.0.7",
     "boiler-room-runner": "^2.1.0",

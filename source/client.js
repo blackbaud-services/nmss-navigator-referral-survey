@@ -11,7 +11,9 @@ if (typeof Promise === 'undefined') {
 }
 
 const basepath = process.env.BASE_PATH
-const initialState = JSON.parse(document.getElementById('initial-state').innerHTML)
+const initialState = JSON.parse(
+  document.getElementById('initial-state').innerHTML
+)
 const store = createStore(initialState)
 const App = createClient({ basepath, routes, store })
 

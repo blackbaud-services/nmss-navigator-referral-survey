@@ -1,16 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
-import RichText from 'constructicon/rich-text'
+import { setPage } from '../../../store/survey'
+import Button from 'constructicon/button'
+import SurveyQuestion from '../../ui/SurveyQuestion'
 
 const Intro = ({ intro }) => (
   <>
-    {intro && <RichText children={intro} />}
+    {intro && <SurveyQuestion type='Caption' label={intro.questionText} />}
+    <Button tag={Link} to='/referral-info' children='Next' />
   </>
 )
 
 const mapStateToProps = ({ survey }) => ({
-  intro: get(survey, 'surveyQuestions[0].questionText')
+  intro: get(survey, 'pages[0].questions[0]')
 })
 
-export default connect(mapStateToProps)(Intro)
+export default connect(mapStateToProps, { setPage })(Intro)

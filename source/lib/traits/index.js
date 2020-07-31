@@ -19,5 +19,22 @@ export const treatments = {
   body: {
     fontFamily: fonts.body,
     color: colors.grey
+  },
+  label: {
+    fontSize: '1rem',
+    fontWeight: 400,
+    lineHeight: '1.333em',
+    minHeight: 0
+  },
+  input: {
+    lineHeight: 1,
+    backgroundImage: 'inherit',
+    borderRadius: '3px',
+    boxShadow: '1px 1px 1px rgba(0, 0, 0, .15) inset',
+    border: '1px solid #ccc',
+    padding: '10px',
+    fontSize: '13px',
+    verticalAlign: 'middle',
+    height: '2.65rem'
   }
 }

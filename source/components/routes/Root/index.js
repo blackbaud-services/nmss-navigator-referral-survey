@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 import * as traits from '../../../lib/traits'
@@ -11,35 +11,33 @@ import Section from 'constructicon/section'
 import Status from '../../ui/Status'
 import TraitsProvider from 'constructicon/traits-provider'
 
-const SiteContainer = ({
-  children,
-  fetchSurvey,
-  getAuth
-}) => {
-  const [status, setStatus] = useState('fetching')
+const SiteContainer = ({ children, fetchSurvey, getAuth, survey }) => {
+  const { status, surveyName } = survey
   useEffect(() => {
     const token = typeof window === 'undefined' ? null : get(window, 'name')
-    if (typeof window !== 'undefined') {
-      console.log(window, 'window')
-    }
     Promise.resolve()
-      .then(() => token && getAuth(token))
-      .then(auth => fetchSurvey(token === 'null' ? { sso_auth_token: auth } : { auth }))
-      .then(() => setStatus('fetched'))
-      .catch(() => setStatus('failed'))
+      .then(() => getAuth(token))
+      .then(auth =>
+        fetchSurvey(
+          !token || token === 'null' ? { sso_auth_token: auth } : { auth }
+        )
+      )
+    // .then(() => setStatus('fetched'))
+    // .catch(() => setStatus('failed'))
   }, [])
+
   return (
     <TraitsProvider traits={traits}>
       <Status status={status}>
         <FlashMessages />
-        <Container width={30}>
-          <Heading tag='h1'>
-            National MS Society Referral Form for Providers
-          </Heading>
+        <Container width={35}>
           {status === 'fetched' && (
-            <Section borderColor='grey' borderWidth={2} margin={0}>
-              {children}
-            </Section>
+            <>
+              {surveyName && <Heading tag='h1' children={surveyName} />}
+              <Section borderColor='grey' borderWidth={2} margin={0}>
+                {children}
+              </Section>
+            </>
           )}
         </Container>
       </Status>
@@ -47,4 +45,6 @@ const SiteContainer = ({
   )
 }
 
-export default connect(null, { getAuth, fetchSurvey })(SiteContainer)
+const mapStateToProps = ({ survey }) => ({ survey })
+
+export default connect(mapStateToProps, { getAuth, fetchSurvey })(SiteContainer)

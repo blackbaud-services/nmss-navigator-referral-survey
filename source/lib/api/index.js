@@ -23,4 +23,5 @@ export const appClient = axios.create({
   baseURL: process.env.APPLICATION_API_URL
 })
 
-export const getAuthToken = () => appClient.get('/auth').then(({ data }) => get(data, 'loginResponse.token'))
+export const getAuthToken = () =>
+  appClient.get('/auth').then(({ data }) => get(data, 'loginResponse.token'))

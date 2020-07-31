@@ -10,7 +10,7 @@ const c = {
 export const getAuth = token => dispatch =>
   Promise.resolve()
     .then(() => dispatch({ type: c.AUTH }))
-    .then(() => token === 'null' ? getAuthToken() : token)
+    .then(() => (!token || token === 'null' ? getAuthToken() : token))
     .then(token => {
       dispatch({ type: c.AUTH_SUCCESS, payload: { token } })
       return token
