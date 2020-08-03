@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import get from 'lodash/get'
+import { find, get } from 'lodash'
 import withForm from 'constructicon/with-form'
 import form from './form'
 import Grid from 'constructicon/grid'
 import GridColumn from 'constructicon/grid-column'
 import Form from '../../ui/Form'
+import UsePhone from '../../ui/UsePhone'
 import SurveyQuestion from '../../ui/SurveyQuestion'
 import { findQuestion, findQuestionByText, getPatientInfoSchema } from '../../../lib/survey'
 import { setModel } from '../../../store/formState'
@@ -96,6 +97,14 @@ const FormTemplate = ({
     }
   }, [isPatient])
 
+  useEffect(() => {
+    const exists = find(questions, i => i.useReferral && i)
+
+    if ((pathname === '/patient-info' || pathname === '/additional-contact') && !isPatient && !exists) {
+      questions.splice(1, 0, { useReferral: true })
+    }
+  }, [])
+
   return (
     <Form
       form={form}
@@ -106,16 +115,24 @@ const FormTemplate = ({
       serverErrors={errors}
     >
       <Grid spacing={{ x: 0.5, y: 0.25 }}>
-        {questions.map(({ questionId }) => {
+        {questions.map(({ questionId, useReferral }, index) => {
           const column = get(findQuestion(pathname, questionId), 'col')
-          return (
-            <GridColumn key={questionId} xs={12} sm={column ? 6 : 12}>
-              <SurveyQuestion
-                disabled={isDisabled.indexOf(Number(questionId)) !== -1}
-                {...form.fields[questionId]}
-              />
-            </GridColumn>
-          )
+          if (useReferral) {
+            return (
+              <GridColumn key={index} xs={12}>
+                <UsePhone form={form} pathname={pathname} />
+              </GridColumn>
+            )
+          } else {
+            return (
+              <GridColumn key={questionId} xs={12} sm={column ? 6 : 12}>
+                <SurveyQuestion
+                  disabled={isDisabled.indexOf(Number(questionId)) !== -1}
+                  {...form.fields[questionId]}
+                />
+              </GridColumn>
+            )
+          }
         })}
       </Grid>
     </Form>

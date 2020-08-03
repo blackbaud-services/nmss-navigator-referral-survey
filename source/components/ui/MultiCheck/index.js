@@ -19,7 +19,6 @@ const MultiCheck = ({
 }) => {
   const [checkboxes, setCheckboxes] = useState('')
   const handleClick = (val, valueText) => {
-    console.log(val, valueText)
     setCheckboxes(
       val
         ? checkboxes.concat(`${valueText}, `)
