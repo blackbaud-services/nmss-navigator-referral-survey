@@ -1,42 +1,9 @@
 import * as validators from 'constructicon/lib/validators'
 import PhoneNumber from 'awesome-phonenumber'
-import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 import keyBy from 'lodash/keyBy'
+import filter from 'lodash/filter'
 import { findQuestion } from '../../lib/survey'
-
-export const formatError = error => {
-  switch (error.status) {
-    case 422: {
-      const errors = get(error, 'data.error.errors') || []
-      return errors.map(({ field, message }) => ({
-        message: [capitalize(field.split('_').join(' ')), message].join(' ')
-      }))
-    }
-    case 400: {
-      const errorMessages = error.data || []
-      return errorMessages.map(({ desc }) => ({ message: capitalize(desc) }))
-    }
-    default: {
-      const message =
-        get(error, 'data.error.message') ||
-        get(error, 'data.errorMessage') ||
-        'There was an unexpected error'
-      return message ? [{ message }] : []
-    }
-  }
-}
-
-export const allowNumbersOnly = event => {
-  const charCode = event.which ? event.which : window.event.keyCode
-
-  if (charCode > 57 || event.shiftKey || charCode === 32) {
-    event.preventDefault()
-    return false
-  }
-
-  return true
-}
 
 export const createPhone = (phone, country = 'us') =>
   new PhoneNumber(phone, country)
@@ -72,7 +39,7 @@ export const deserializeQuestions = ({ formState, location, questions }) => {
         questionTypeData,
         'surveyQuestionData.availableAnswer'
       )
-      const map = findQuestion(location, questionId)
+      const map = findQuestion(pathname, questionId)
       const isPhone = map && map.question === 'phone'
       const isEmail = map && map.question === 'email'
       const initialVal = model && model[`${questionId}`]
@@ -83,8 +50,8 @@ export const deserializeQuestions = ({ formState, location, questions }) => {
         options:
           options && questionType !== 'YesNo'
             ? questionType !== 'MultiMulti'
-              ? [{ label: 'Please Select', value: '' }].concat(options)
-              : options
+              ? filter([{ label: 'Please Select', value: '' }].concat(options), i => i.value !== 'N/A')
+              : filter(options, i => i.value !== 'N/A')
             : null,
         initial: initialVal,
         required: questionRequired === 'true' && true,
@@ -99,6 +66,5 @@ export const deserializeQuestions = ({ formState, location, questions }) => {
       }
     }
   )
-  const questionsObj = keyBy(questionsArray, 'id')
-  return questionsObj
+  return keyBy(questionsArray, 'id')
 }

@@ -25,5 +25,8 @@ export default (props, { rhythm, scale, treatments }) => ({
     field: {
       display: 'inline-block'
     }
+  },
+  error: {
+    ...treatments.error
   }
 })

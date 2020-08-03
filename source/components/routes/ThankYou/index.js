@@ -1,7 +1,6 @@
 import React from 'react'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
-import { setPage } from '../../../store/survey'
 import Heading from 'constructicon/heading'
 import Icon from 'constructicon/icon'
 
@@ -80,4 +79,4 @@ const mapStateToProps = ({ formState }) => ({
   types: get(formState, 'additionalInfo')
 })
 
-export default connect(mapStateToProps, { setPage })(ThankYou)
+export default connect(mapStateToProps)(ThankYou)

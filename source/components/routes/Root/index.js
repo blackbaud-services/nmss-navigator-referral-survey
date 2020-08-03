@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 import * as traits from '../../../lib/traits'
-import { getAuth, fetchSurvey } from '../../../store'
+import { initAnswers, getAuth, fetchSurvey } from '../../../store'
 
 import Container from 'constructicon/container'
 import FlashMessages from './FlashMessages'
@@ -11,7 +11,13 @@ import Section from 'constructicon/section'
 import Status from '../../ui/Status'
 import TraitsProvider from 'constructicon/traits-provider'
 
-const SiteContainer = ({ children, fetchSurvey, getAuth, survey }) => {
+const SiteContainer = ({
+  children,
+  fetchSurvey,
+  initAnswers,
+  getAuth,
+  survey
+}) => {
   const { status, surveyName } = survey
   useEffect(() => {
     const token = typeof window === 'undefined' ? null : get(window, 'name')
@@ -22,8 +28,8 @@ const SiteContainer = ({ children, fetchSurvey, getAuth, survey }) => {
           !token || token === 'null' ? { sso_auth_token: auth } : { auth }
         )
       )
-    // .then(() => setStatus('fetched'))
-    // .catch(() => setStatus('failed'))
+      .then(({ surveyQuestions }) => initAnswers(surveyQuestions))
+      .catch(error => console.error(error))
   }, [])
 
   return (
@@ -33,7 +39,9 @@ const SiteContainer = ({ children, fetchSurvey, getAuth, survey }) => {
         <Container width={35}>
           {status === 'fetched' && (
             <>
-              {surveyName && <Heading tag='h1' children={surveyName} />}
+              {surveyName && (
+                <Heading tag='h1' spacing={{ y: 1 }} children={surveyName} />
+              )}
               <Section borderColor='grey' borderWidth={2} margin={0}>
                 {children}
               </Section>
@@ -47,4 +55,6 @@ const SiteContainer = ({ children, fetchSurvey, getAuth, survey }) => {
 
 const mapStateToProps = ({ survey }) => ({ survey })
 
-export default connect(mapStateToProps, { getAuth, fetchSurvey })(SiteContainer)
+export default connect(mapStateToProps, { initAnswers, getAuth, fetchSurvey })(
+  SiteContainer
+)

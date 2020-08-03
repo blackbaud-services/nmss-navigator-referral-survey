@@ -1,4 +1,5 @@
 import find from 'lodash/find'
+import filter from 'lodash/filter'
 
 export const surveyMap = {
   '/referral-info': [
@@ -330,5 +331,15 @@ export const surveyMap = {
   ]
 }
 
-export const findQuestion = ({ pathname }, questionId) =>
+export const findQuestion = (pathname, questionId) =>
   find(surveyMap[pathname], ({ id }) => id === Number(questionId))
+
+export const findQuestionByText = (pathname, questionText) =>
+  find(surveyMap[pathname], ({ question }) => question === questionText)
+
+export const getPatientInfoSchema = () => filter(surveyMap['/patient-info'], i => {
+  const filteredQuestions = ['relationship', 'additionalInfo', 'apsReferral', 'confirmation', 'diagnosisOther', 'diagnosis']
+  if (filteredQuestions.indexOf(i.question) === -1) {
+    return i
+  }
+})

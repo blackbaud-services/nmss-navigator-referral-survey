@@ -10,6 +10,9 @@ export default (props, { breakpoints, scale, treatments }) => ({
   select: {
     input: {
       ...treatments.input
+    },
+    error: {
+      ...treatments.error
     }
   },
   input: {

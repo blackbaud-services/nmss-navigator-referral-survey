@@ -11,9 +11,15 @@ export const getAuth = token => dispatch =>
   Promise.resolve()
     .then(() => dispatch({ type: c.AUTH }))
     .then(() => (!token || token === 'null' ? getAuthToken() : token))
-    .then(token => {
-      dispatch({ type: c.AUTH_SUCCESS, payload: { token } })
-      return token
+    .then(auth => {
+      dispatch({
+        type: c.AUTH_SUCCESS,
+        payload: {
+          type: !token ? 'sso_auth_token' : 'auth',
+          token: auth
+        }
+      })
+      return !token ? auth : token
     })
     .catch(error => {
       dispatch({ type: c.AUTH_FAILURE, payload: error })

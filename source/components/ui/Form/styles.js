@@ -1,4 +1,4 @@
-export default (props, { breakpoints, mediaQuery, rhythm, scale }) => ({
+export default (props, { breakpoints, colors, mediaQuery, rhythm, scale }) => ({
   form: {
     root: {
       paddingBottom: 0,
@@ -14,7 +14,6 @@ export default (props, { breakpoints, mediaQuery, rhythm, scale }) => ({
     [mediaQuery('sm')]: {
       flexDirection: 'row'
     }
-
   },
   btn: {
     textTransform: 'none',
@@ -23,6 +22,20 @@ export default (props, { breakpoints, mediaQuery, rhythm, scale }) => ({
     maxWidth: breakpoints.sm,
     '&:hover': {
       textDecoration: 'none'
+    }
+  },
+  errors: {
+    margin: rhythm([1, 0]),
+    padding: rhythm([0.5, 0.75]),
+    backgroundColor: colors.danger,
+    fontWeight: 'bold',
+    color: colors.light,
+    '& > div': {
+      lineHeight: 1.5,
+      margin: rhythm([0, 0, 0.25])
+    },
+    '& > div:last-child': {
+      margin: 0
     }
   }
 })

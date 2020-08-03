@@ -1,11 +1,12 @@
 import merge from 'lodash/merge'
 
 export default (
-  { currency, label, phone, styles, type },
-  { breakpoints, colors, mediaQuery, radiuses, rhythm, scale, treatments }
+  { currency, disabled, label, phone, styles, type },
+  { breakpoints, colors, mediaQuery, rhythm, scale, treatments }
 ) => {
   const commonStyles = {
     root: {
+      // display: disabled && 'none',
       maxWidth: type === 'YesNo' ? '100%' : breakpoints.xs
     },
     label: {
@@ -18,51 +19,7 @@ export default (
       ...treatments.input
     },
     error: {
-      display: 'inline-block',
-      position: 'relative',
-      padding: rhythm([0.25, 0.5]),
-      paddingLeft: '2rem',
-      marginTop: '1em',
-      borderRadius: rhythm(radiuses.medium),
-      backgroundColor: colors.danger,
-      color: colors.light,
-      lineHeight: 1.5,
-      fontSize: scale(-1),
-      fontWeight: 'bold',
-
-      '&:before': {
-        content: '"i"',
-        position: 'absolute',
-        left: '0.5rem',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: '1rem',
-        height: '1rem',
-        lineHeight: '1rem',
-        textAlign: 'center',
-        fontFamily: 'monospace',
-        fontWeight: 900,
-        fontSize: '1rem',
-        backgroundColor: colors.light,
-        color: colors.danger,
-        borderRadius: rhythm(radiuses.large)
-      },
-
-      '&:after': {
-        content: '""',
-        position: 'absolute',
-        bottom: '100%',
-        left: '0.5rem',
-        width: '1rem',
-        height: '1rem',
-        border: '8px solid transparent',
-        borderBottomColor: colors.danger
-      },
-
-      '> div': {
-        display: 'inline',
-        margin: 0
-      }
+      ...treatments.error
     }
   }
 

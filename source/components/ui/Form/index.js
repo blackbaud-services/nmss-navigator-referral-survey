@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { formatError } from '../../../lib/form'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import get from 'lodash/get'
+import { setFlashMessage } from '../../../store/flashMessages'
+
 import withStyles from 'constructicon/with-styles'
 import styles from './styles'
 
@@ -14,42 +18,52 @@ const Form = ({
   children,
   classNames,
   form,
+  isLoading,
   onSubmit,
+  setFlashMessage,
   styles,
   submit,
   submitting,
+  serverErrors,
   ...props
 }) => {
   const [errors, setErrors] = useState([])
-  const [status, setStatus] = useState(null)
 
   const handleSubmit = e => {
     e.preventDefault()
-
-    return form.submit().then(data =>
-      Promise.resolve()
-        .then(() => setStatus('fetching'))
-        .then(() => onSubmit(data))
-        .then(() => setStatus('fetched'))
-        .catch(error => {
-          console.log(error, 'err')
-          setStatus('failed')
-          setErrors(formatError(error))
-        })
-    )
+    if (form.invalid) {
+      setErrors([
+        'Invalid form submission. Correct highlighted issues above and make sure all required fields are answered.'
+      ])
+    }
+    return form.submit().then(data => onSubmit(data))
   }
+
+  useEffect(() => {
+    if (serverErrors) {
+      setErrors(serverErrors)
+    }
+  }, [serverErrors])
 
   return (
     <BaseForm
       noValidate
-      errors={errors}
-      isLoading={status === 'fetching'}
+      isLoading={isLoading}
       onSubmit={handleSubmit}
       styles={styles.form}
-      submit={status === 'fetching' ? submitting : submit}
+      submit={!isLoading ? submitting : submit}
       {...props}
     >
       {children}
+      {errors.length > 0 && (
+        <div className={classNames.errors}>
+          {errors.map((error, i) => (
+            <div key={i} className={classNames.error}>
+              {error}
+            </div>
+          ))}
+        </div>
+      )}
       <ButtonGroup styles={styles.btns}>
         {action && (
           <Button
@@ -65,7 +79,7 @@ const Form = ({
         )}
         <Button
           styles={styles.btn}
-          disabled={status === 'fetching'}
+          disabled={isLoading}
           aria-label={submit}
           title={submit}
           type='submit'
@@ -78,9 +92,16 @@ const Form = ({
   )
 }
 
+const mapStateToProps = ({ survey }) => ({
+  serverErrors: get(survey, 'submit.message')
+})
+
 Form.defaultProps = {
   submit: 'Next',
   submitting: 'Loading...'
 }
 
-export default withStyles(styles)(Form)
+export default compose(
+  connect(mapStateToProps, { setFlashMessage }),
+  withStyles(styles)
+)(Form)

@@ -1,3 +1,5 @@
+import { radiuses, rhythm, scale } from 'constructicon/lib/traits'
+
 export const fonts = {
   head: `'Source Sans Pro', Helvetica, Arial, sans-serif`,
   body: `'Source Sans Pro', Helvetica, Arial, sans-serif`
@@ -8,7 +10,8 @@ export const colors = {
   tertiary: '#555',
   light: '#fdfdfd',
   grey: '#544d46',
-  dark: '#282828'
+  dark: '#282828',
+  danger: '#d9534f'
 }
 
 export const treatments = {
@@ -36,5 +39,52 @@ export const treatments = {
     fontSize: '13px',
     verticalAlign: 'middle',
     height: '2.65rem'
+  },
+  error: {
+    display: 'inline-block',
+    position: 'relative',
+    padding: rhythm([0.25, 0.5]),
+    paddingLeft: '2rem',
+    marginTop: '1em',
+    borderRadius: rhythm(radiuses.medium),
+    backgroundColor: colors.danger,
+    color: colors.light,
+    lineHeight: 1.5,
+    fontSize: scale(-1),
+    fontWeight: 'bold',
+
+    '&:before': {
+      content: '"i"',
+      position: 'absolute',
+      left: '0.5rem',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: '1rem',
+      height: '1rem',
+      lineHeight: '1rem',
+      textAlign: 'center',
+      fontFamily: 'monospace',
+      fontWeight: 900,
+      fontSize: '1rem',
+      backgroundColor: colors.light,
+      color: colors.danger,
+      borderRadius: rhythm(radiuses.large)
+    },
+
+    '&:after': {
+      content: '""',
+      position: 'absolute',
+      bottom: '100%',
+      left: '0.5rem',
+      width: '1rem',
+      height: '1rem',
+      border: '8px solid transparent',
+      borderBottomColor: colors.danger
+    },
+
+    '> div': {
+      display: 'inline',
+      margin: 0
+    }
   }
 }

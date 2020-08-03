@@ -1,6 +1,6 @@
 import { setFlashMessage } from '../flashMessages'
 import { defaultParams, secureClient } from '../../lib/api'
-import { deserializeSurveyPages, formatError } from '../../lib/utils'
+import { deserializeSurveyPages, formatError, prepareData } from '../../lib/utils'
 import { stringify } from 'qs'
 import get from 'lodash/get'
 
@@ -8,17 +8,18 @@ const c = {
   FETCH: 'app/survey/FETCH',
   FETCH_SUCCESS: 'app/survey/FETCH_SUCCESS',
   FETCH_FAILURE: 'app/survey/FETCH_FAILURE',
-  SET_PAGE: 'app/survey/SET_PAGE',
-  SET_SUCCESS: 'app/survey/SET_SUCCESS',
-  SET_FAILURE: 'app/survey/SET_FAILURE'
+  SUBMIT: 'app/survey/SUBMIT',
+  SUBMIT_SUCCESS: 'app/survey/SUBMIT_SUCCESS',
+  SUBMIT_FAILURE: 'app/survey/SUBMIT_FAILURE'
 }
+
 export const fetchSurvey = authParam => dispatch => {
   const params = {
     method: 'getSurvey',
     survey_id: process.env.SURVEY_ID,
     ...authParam
   }
-  Promise.resolve()
+  return Promise.resolve()
     .then(() => dispatch({ type: c.FETCH, payload: 'fetching' }))
     .then(() =>
       secureClient({
@@ -31,11 +32,17 @@ export const fetchSurvey = authParam => dispatch => {
       const successResponse = get(response, 'data.getSurveyResponse.survey')
       const errorResponse = get(response, 'data.errorResponse')
       if (successResponse) {
-        dispatch({ type: c.FETCH_SUCCESS, payload: successResponse })
+        dispatch({
+          type: c.FETCH_SUCCESS,
+          payload: successResponse
+        })
+        return successResponse
       } else {
-        throw new Error(
-          errorResponse ? formatError(errorResponse) : 'Unknown error occurred'
-        )
+        dispatch({
+          type: c.FETCH_FAILURE,
+          payload: formatError(errorResponse)
+        })
+        return Promise.reject(errorResponse)
       }
     })
     .catch(error => {
@@ -43,19 +50,71 @@ export const fetchSurvey = authParam => dispatch => {
         'Survey not found, make sure survey is published',
         'danger'
       )
-      dispatch({ type: c.FETCH_FAILURE, payload: error })
-      Promise.reject(error)
+      dispatch({
+        type: c.FETCH_FAILURE,
+        payload: error
+      })
+      return Promise.reject(error)
     })
 }
 
-export const setPage = page => dispatch =>
-  dispatch({ type: c.SET_PAGE, payload: page })
+export const submitSurvey = (answers, survey, { type, token }) => dispatch => {
+  const data = prepareData(answers, survey)
+  const params = {
+    method: 'submitSurvey',
+    survey_id: process.env.SURVEY_ID,
+    [type]: token,
+    ...data
+  }
+  return Promise.resolve()
+    .then(() => dispatch({ type: c.SUBMIT, payload: params }))
+    .then(() =>
+      secureClient({
+        method: 'post',
+        url: 'CRSurveyAPI',
+        data: stringify({ ...params, ...defaultParams })
+      })
+    )
+    .then(({ data }) => {
+      const successResponse = get(data, 'submitSurveyResponse.success')
+
+      const errorResponse = get(data, 'errorResponse')
+        ? data.errorResponse.message
+        : get(data, 'submitSurveyResponse.errors')
+
+      if (successResponse && successResponse === 'true') {
+        dispatch({
+          type: c.SUBMIT_SUCCESS,
+          payload: successResponse
+        })
+        return successResponse
+      } else {
+        return Promise.reject(errorResponse)
+      }
+    })
+    .catch(error => {
+      dispatch({
+        type: c.SUBMIT_FAILURE,
+        payload: formatError(error)
+      })
+      return Promise.reject(error)
+    })
+}
 
 export default (state = {}, { type, payload = {} }) => {
   switch (type) {
     case c.FETCH: {
       return {
         status: 'fetching'
+      }
+    }
+
+    case c.SUBMIT: {
+      return {
+        ...state,
+        submit: {
+          status: 'fetching'
+        }
       }
     }
 
@@ -67,10 +126,10 @@ export default (state = {}, { type, payload = {} }) => {
       }
     }
 
-    case c.SET_PAGE: {
+    case c.SUBMIT_SUCCESS: {
       return {
         ...state,
-        page: {
+        submit: {
           ...payload,
           status: 'fetched'
         }
@@ -80,6 +139,16 @@ export default (state = {}, { type, payload = {} }) => {
     case c.FETCH_FAILURE: {
       return {
         status: 'failed'
+      }
+    }
+
+    case c.SUBMIT_FAILURE: {
+      return {
+        ...state,
+        submit: {
+          ...payload,
+          status: 'failed'
+        }
       }
     }
 

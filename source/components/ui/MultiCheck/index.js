@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from 'constructicon/input-field'
 import InputValidations from 'constructicon/input-validations'
 import Label from 'constructicon/label'
@@ -19,14 +19,17 @@ const MultiCheck = ({
 }) => {
   const [checkboxes, setCheckboxes] = useState('')
   const handleClick = (val, valueText) => {
+    console.log(val, valueText)
     setCheckboxes(
       val
-        ? checkboxes.concat(`${valueText},`)
+        ? checkboxes.concat(`${valueText}, `)
         : checkboxes.replace(`${valueText},`, '')
     )
-
-    return onChange && onChange(checkboxes)
   }
+
+  useEffect(() => {
+    return onChange && onChange(checkboxes.trim())
+  }, [checkboxes])
 
   return (
     <div className={classNames.root}>

@@ -1,27 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
-import { setModel } from '../../../store/formState'
 import FormTemplate from '../../forms/template'
 
-const PatientInfo = ({ nextUrl, page, router, setModel }) => {
-  const [errors, setErrors] = useState([])
-  const handleUpdate = data =>
-    Promise.resolve()
-      .then(() => setModel(data))
-      .then(() => router.push(nextUrl))
-      .catch(() => setErrors(['Please fill out all required fields']))
-
-  return (
-    <FormTemplate
-      {...page}
-      {...router}
-      onSuccess={handleUpdate}
-      errors={errors}
-      prevUrl='/additional-info'
-    />
-  )
-}
+const PatientInfo = ({ nextUrl, page, router }) => (
+  <FormTemplate
+    {...page}
+    {...router}
+    prevUrl='/additional-info'
+    nextUrl={nextUrl}
+  />
+)
 
 const mapStateToProps = ({ survey, formState }) => ({
   page: get(survey, 'pages[3]'),
@@ -30,4 +19,4 @@ const mapStateToProps = ({ survey, formState }) => ({
     : '/provider-info'
 })
 
-export default connect(mapStateToProps, { setModel })(PatientInfo)
+export default connect(mapStateToProps)(PatientInfo)

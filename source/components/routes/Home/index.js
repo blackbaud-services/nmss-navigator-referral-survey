@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
-import { setPage } from '../../../store/survey'
 import Button from 'constructicon/button'
 import SurveyQuestion from '../../ui/SurveyQuestion'
 
@@ -17,4 +16,4 @@ const mapStateToProps = ({ survey }) => ({
   intro: get(survey, 'pages[0].questions[0]')
 })
 
-export default connect(mapStateToProps, { setPage })(Intro)
+export default connect(mapStateToProps)(Intro)

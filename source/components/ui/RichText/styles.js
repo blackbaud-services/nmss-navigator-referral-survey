@@ -6,7 +6,7 @@ export default (
 ) => {
   const headingStyles = fontSize => ({
     ...treatments.head,
-    marginBottom: rhythm(0.75),
+    marginBottom: rhythm(0.5),
     fontSize: scale(fontSize),
     color: colors.grey
   })
