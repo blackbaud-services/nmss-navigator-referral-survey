@@ -8,6 +8,7 @@
     "start:backend": "rm -rf dist && NODE_ENV=production brb serve --config='./webpack.shared.config' --port=3000",
     "start:frontend": "brb serve --config='./webpack.shared.config'",
     "build": "NODE_ENV=production brb build --config='./webpack.shared.config' --base-path=$BASE_PATH",
+    "build:prod": "ENV_FILE=.env.production yarn build",
     "deploy:prod": "yarn build && brb deploy --target s3 --bucket blackbaud-sites.com --prefix nmss-referral-survey.blackbaud-sites.com",
     "lint": "brb lint",
     "lint:fix": "prettier-standard 'source/**/*.js'"
