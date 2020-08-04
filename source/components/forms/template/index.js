@@ -118,12 +118,13 @@ const FormTemplate = ({
   )
 }
 
-const mapStateToProps = ({ formState, survey }) => {
+const mapStateToProps = ({ answers, formState, survey }) => {
   const referralModel = get(formState, 'model./referral-info')
   const keyId = findQuestionByText('/referral-info', 'personIs').id
   const isPatient = referralModel && referralModel[`${keyId}`] && referralModel[`${keyId}`].indexOf('Patient') !== -1
 
   return {
+    answers,
     formState,
     isPatient,
     survey

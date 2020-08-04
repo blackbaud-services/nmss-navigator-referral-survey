@@ -1,6 +1,6 @@
 import { setFlashMessage } from '../flashMessages'
 import { defaultParams, secureClient } from '../../lib/api'
-import { deserializeSurveyPages, formatError, prepareData } from '../../lib/utils'
+import { deserializeSurveyPages, formatError, prepareData, prepareMulti } from '../../lib/utils'
 import { stringify } from 'qs'
 import get from 'lodash/get'
 
@@ -25,7 +25,10 @@ export const fetchSurvey = authParam => dispatch => {
       secureClient({
         method: 'post',
         url: 'CRSurveyAPI',
-        data: stringify({ ...params, ...defaultParams })
+        data: stringify({
+          ...params,
+          ...defaultParams
+        })
       })
     )
     .then(response => {
@@ -59,20 +62,21 @@ export const fetchSurvey = authParam => dispatch => {
 }
 
 export const submitSurvey = (answers, survey, { type, token }) => dispatch => {
-  const data = prepareData(answers, survey)
   const params = {
     method: 'submitSurvey',
     survey_id: process.env.SURVEY_ID,
     [type]: token,
-    ...data
+    ...defaultParams,
+    ...prepareData(answers, survey)
   }
+  const data = stringify({ ...params, ...defaultParams }) + prepareMulti(answers, survey)
   return Promise.resolve()
     .then(() => dispatch({ type: c.SUBMIT, payload: params }))
     .then(() =>
       secureClient({
         method: 'post',
         url: 'CRSurveyAPI',
-        data: stringify({ ...params, ...defaultParams })
+        data
       })
     )
     .then(({ data }) => {

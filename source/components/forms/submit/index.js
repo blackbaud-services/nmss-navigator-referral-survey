@@ -57,9 +57,7 @@ const SubmitForm = ({
   }, [status])
 
   useEffect(() => {
-    console.log('add', additionalInfo)
     if (additionalInfo && !additionalInfo.showAdditionalContact) {
-      console.log('update form', get(findQuestionByText('/preferences', 'signature2'), 'id'))
       form.updateValues({
         [`${get(findQuestionByText('/preferences', 'signature2'), 'id')}`]: 'N/A'
       })

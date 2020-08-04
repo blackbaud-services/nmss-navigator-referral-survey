@@ -21,8 +21,8 @@ const MultiCheck = ({
   const handleClick = (val, valueText) => {
     setCheckboxes(
       val
-        ? checkboxes.concat(`${valueText}, `)
-        : checkboxes.replace(`${valueText},`, '')
+        ? checkboxes.concat(`${valueText}*`)
+        : checkboxes.replace(`${valueText}*`, '')
     )
   }
 

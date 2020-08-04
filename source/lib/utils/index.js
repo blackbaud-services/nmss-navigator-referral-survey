@@ -28,11 +28,24 @@ export const deserializeSurveyPages = questions => {
   }
 }
 
+export const prepareMulti = (answers, { surveyQuestions }) => {
+  const questions = surveyQuestions.filter(({ questionType }) => questionType === 'MultiMulti')
+
+  const data =
+    questions.reduce((str, i) => {
+      const checks = filter(answers[i.questionId].split('*'), i => i !== '').map(item => `&question_${i.questionId}=${item}`)
+      const string = checks.join('')
+      str += string
+      return str
+    }, '')
+  return data
+}
+
 export const prepareData = (answers, { surveyQuestions }) => {
   const questions =
-    surveyQuestions.filter(question =>
-      question.questionType !== 'HiddenTextValue' &&
-      question.questionType !== 'Caption'
+    surveyQuestions.filter(({ questionType }) =>
+      questionType !== 'HiddenTextValue' &&
+      questionType !== 'Caption' && questionType !== 'MultiMulti'
     )
 
   const formData = questions.reduce((obj, i) => {
@@ -46,18 +59,6 @@ export const prepareData = (answers, { surveyQuestions }) => {
           : 'Other'
         obj[`question_${i.questionId}`] = answers[i.questionId]
         return obj
-      case 'MultiMulti':
-        const multi =
-          filter(answers[i.questionId].split(','), i => i !== '')
-            .reduce((checks, value) => {
-              checks[`question_${i.questionId}`] = value
-              return checks
-            }, {})
-        const newObj = {
-          ...obj,
-          ...multi
-        }
-        return newObj
       default:
         obj[`question_${i.questionId}`] =
           answers[i.questionId] === true

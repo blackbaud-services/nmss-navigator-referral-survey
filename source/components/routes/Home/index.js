@@ -12,7 +12,8 @@ const Intro = ({ intro }) => (
       <SurveyQuestion type='Caption' label={intro.questionText} />
     )}
     <Button tag={Link} to='/referral-info'>
-      Next <Icon name='chevron' />
+      <span>Next</span>
+      <Icon name='chevron' />
     </Button>
   </>
 )
