@@ -23,6 +23,22 @@ export const treatments = {
     fontFamily: fonts.body,
     color: colors.grey
   },
+  button: {
+    textTransform: 'none',
+    minWidth: '200px',
+    fontSize: scale(1.25),
+    backgroundImage: 'linear-gradient(#d85316, #cc3f10)',
+    '&:hover': {
+      background: '#b53307',
+      textDecoration: 'none'
+    },
+    '&:hover:before': {
+      opacity: '0 !important'
+    },
+    '& > svg': {
+      display: 'inline !important'
+    }
+  },
   label: {
     fontSize: '1rem',
     fontWeight: 400,

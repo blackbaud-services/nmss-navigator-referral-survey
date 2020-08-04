@@ -42,7 +42,11 @@ const SiteContainer = ({
               {surveyName && (
                 <Heading tag='h1' spacing={{ y: 1 }} children={surveyName} />
               )}
-              <Section borderColor='grey' borderWidth={2} margin={0}>
+              <Section
+                borderColor='grey'
+                borderWidth={5}
+                margin={0}
+              >
                 {children}
               </Section>
             </>

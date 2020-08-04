@@ -37,7 +37,7 @@ const SubmitForm = ({
   const handleSubmit = () =>
     Promise.resolve()
       .then(() => setLoading(true))
-      .then(() => submitSurvey(answers, survey))
+      .then(() => submitSurvey(answers, survey, auth))
       .then(() => setLoading(false))
       .then(() => push('/thank-you'))
       .catch(error => {
@@ -57,7 +57,9 @@ const SubmitForm = ({
   }, [status])
 
   useEffect(() => {
+    console.log('add', additionalInfo)
     if (additionalInfo && !additionalInfo.showAdditionalContact) {
+      console.log('update form', get(findQuestionByText('/preferences', 'signature2'), 'id'))
       form.updateValues({
         [`${get(findQuestionByText('/preferences', 'signature2'), 'id')}`]: 'N/A'
       })

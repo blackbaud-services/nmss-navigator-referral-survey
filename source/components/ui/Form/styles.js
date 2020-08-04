@@ -1,4 +1,4 @@
-export default (props, { breakpoints, colors, mediaQuery, rhythm, scale }) => ({
+export default (props, { breakpoints, colors, mediaQuery, rhythm, scale, treatments }) => ({
   form: {
     root: {
       paddingBottom: 0,
@@ -16,13 +16,9 @@ export default (props, { breakpoints, colors, mediaQuery, rhythm, scale }) => ({
     }
   },
   btn: {
-    textTransform: 'none',
+    ...treatments.button,
     flex: 1,
-    fontSize: scale(1.25),
-    maxWidth: breakpoints.sm,
-    '&:hover': {
-      textDecoration: 'none'
-    }
+    maxWidth: breakpoints.sm
   },
   errors: {
     margin: rhythm([1, 0]),

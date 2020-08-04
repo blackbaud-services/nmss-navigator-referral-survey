@@ -7,6 +7,7 @@ import form from './form'
 import Grid from 'constructicon/grid'
 import GridColumn from 'constructicon/grid-column'
 import Form from '../../ui/Form'
+import UseAddress from '../../ui/UseAddress'
 import UsePhone from '../../ui/UsePhone'
 import SurveyQuestion from '../../ui/SurveyQuestion'
 import { findQuestion, findQuestionByText, getPatientInfoSchema } from '../../../lib/survey'
@@ -97,6 +98,7 @@ const FormTemplate = ({
           if (useReferral) {
             return (
               <GridColumn key={index} xs={12}>
+                <UseAddress form={form} pathname={pathname} />
                 <UsePhone form={form} pathname={pathname} />
               </GridColumn>
             )
