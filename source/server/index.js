@@ -33,17 +33,7 @@ export default ({ assets, ...props }) => {
     return app(currentPath)
   }
 
-  serverApp.staticRoutes = [
-    '/',
-    '/auth',
-    '/referral-info',
-    '/additional-info',
-    '/patient-info',
-    '/additional-contact',
-    '/provider-info',
-    '/preferences',
-    '/thank-you'
-  ]
+  serverApp.staticRoutes = ['/']
 
   return serverApp
 }
