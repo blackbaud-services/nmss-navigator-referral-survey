@@ -1,5 +1,6 @@
-import { getAuthToken } from '../../lib/api'
 import { setFlashMessage } from '../flashMessages'
+import { defaultParams, secureClient } from '../../lib/api'
+import { stringify } from 'qs'
 
 const c = {
   AUTH: 'app/auth/AUTH',
@@ -7,25 +8,37 @@ const c = {
   AUTH_FAILURE: 'app/auth/AUTH_FAILURE'
 }
 
-export const getAuth = token => dispatch =>
+export const getAuth = () => dispatch => {
+  const params = {
+    method: 'getLoginUrl',
+    withCredentials: true,
+    ...defaultParams
+  }
   Promise.resolve()
     .then(() => dispatch({ type: c.AUTH }))
-    .then(() => (!token || token === 'null' ? getAuthToken() : token))
-    .then(auth => {
+    .then(() =>
+      secureClient({
+        method: 'get',
+        url: `CRConsAPI?${stringify({ ...params })}`
+      })
+    )
+    .then(({ data: { getLoginUrlResponse } }) => {
       dispatch({
         type: c.AUTH_SUCCESS,
         payload: {
-          type: !token ? 'sso_auth_token' : 'auth',
-          token: auth
+          type: 'auth',
+          id: getLoginUrlResponse.routing_id,
+          ...getLoginUrlResponse
         }
       })
-      return !token ? auth : token
+      return getLoginUrlResponse
     })
     .catch(error => {
       dispatch({ type: c.AUTH_FAILURE, payload: error })
       setFlashMessage('A valid auth token is needed', 'danger')
       return Promise.reject(error)
     })
+}
 
 export default (state = {}, { type, payload = {} }) => {
   switch (type) {

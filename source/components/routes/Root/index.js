@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import get from 'lodash/get'
 import * as traits from '../../../lib/traits'
 import { initAnswers, getAuth, fetchSurvey } from '../../../store'
 
@@ -12,25 +11,25 @@ import Status from '../../ui/Status'
 import TraitsProvider from 'constructicon/traits-provider'
 
 const SiteContainer = ({
+  auth,
   children,
   fetchSurvey,
   initAnswers,
   getAuth,
-  survey
+  survey: { status, surveyName }
 }) => {
-  const { status, surveyName } = survey
   useEffect(() => {
-    const token = typeof window === 'undefined' ? null : get(window, 'name')
-    Promise.resolve()
-      .then(() => getAuth(token))
-      .then(auth =>
-        fetchSurvey(
-          !token || token === 'null' ? { sso_auth_token: auth } : { auth }
-        )
-      )
-      .then(({ surveyQuestions }) => initAnswers(surveyQuestions))
-      .catch(error => console.error(error))
+    getAuth()
   }, [])
+
+  useEffect(() => {
+    if (auth.status === 'fetched') {
+      Promise.resolve()
+        .then(() => fetchSurvey(auth))
+        .then(({ surveyQuestions }) => initAnswers(surveyQuestions))
+        .catch(error => console.error(error))
+    }
+  }, [auth])
 
   return (
     <TraitsProvider traits={traits}>
@@ -57,7 +56,7 @@ const SiteContainer = ({
   )
 }
 
-const mapStateToProps = ({ survey }) => ({ survey })
+const mapStateToProps = ({ auth, survey }) => ({ auth, survey })
 
 export default connect(mapStateToProps, { initAnswers, getAuth, fetchSurvey })(
   SiteContainer

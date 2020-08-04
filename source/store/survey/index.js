@@ -13,18 +13,19 @@ const c = {
   SUBMIT_FAILURE: 'app/survey/SUBMIT_FAILURE'
 }
 
-export const fetchSurvey = authParam => dispatch => {
+export const fetchSurvey = ({ JSESSIONID, id, token }) => dispatch => {
   const params = {
     method: 'getSurvey',
     survey_id: process.env.SURVEY_ID,
-    ...authParam
+    JSESSIONID,
+    auth: token
   }
   return Promise.resolve()
     .then(() => dispatch({ type: c.FETCH, payload: 'fetching' }))
     .then(() =>
       secureClient({
         method: 'post',
-        url: 'CRSurveyAPI',
+        url: `CRSurveyAPI;jsessionid=${id}`,
         data: stringify({
           ...params,
           ...defaultParams
@@ -61,11 +62,12 @@ export const fetchSurvey = authParam => dispatch => {
     })
 }
 
-export const submitSurvey = (answers, survey, { type, token }) => dispatch => {
+export const submitSurvey = (answers, survey, { JSESSIONID, id, token }) => dispatch => {
   const params = {
     method: 'submitSurvey',
     survey_id: process.env.SURVEY_ID,
-    [type]: token,
+    JSESSIONID,
+    auth: token,
     ...defaultParams,
     ...prepareData(answers, survey)
   }
@@ -75,7 +77,7 @@ export const submitSurvey = (answers, survey, { type, token }) => dispatch => {
     .then(() =>
       secureClient({
         method: 'post',
-        url: 'CRSurveyAPI',
+        url: `CRSurveyAPI;jsessionid=${id}`,
         data
       })
     )
@@ -134,7 +136,7 @@ export default (state = {}, { type, payload = {} }) => {
       return {
         ...state,
         submit: {
-          ...payload,
+          payload,
           status: 'fetched'
         }
       }
