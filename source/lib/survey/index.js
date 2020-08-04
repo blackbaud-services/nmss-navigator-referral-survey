@@ -324,6 +324,11 @@ export const surveyMap = {
       question: 'signature1'
     },
     {
+      id: 409344,
+      col: false,
+      question: 'signature2Caption'
+    },
+    {
       id: 409345,
       col: false,
       question: 'signature2'

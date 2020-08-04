@@ -1,16 +1,10 @@
 import React from 'react'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
-import FormTemplate from '../../forms/template'
+import SubmitForm from '../../forms/submit'
 
 const Preferences = ({ page, router }) => (
-  <FormTemplate
-    {...page}
-    {...router}
-    prevUrl='/provider-info'
-    nextUrl='/thank-you'
-    submit='Submit Referral'
-  />
+  <SubmitForm {...page} {...router} />
 )
 
 const mapStateToProps = ({ survey }) => ({

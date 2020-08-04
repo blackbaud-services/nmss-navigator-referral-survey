@@ -7,8 +7,13 @@ import SurveyQuestion from '../../ui/SurveyQuestion'
 
 const Intro = ({ intro }) => (
   <>
-    {intro && <SurveyQuestion type='Caption' label={intro.questionText} />}
-    <Button tag={Link} to='/referral-info' children='Next' />
+    {intro && (
+      <SurveyQuestion type='Caption' label={intro.questionText} />
+    )}
+    <Button
+      tag={Link}
+      to='/referral-info'
+      children='Next' />
   </>
 )
 

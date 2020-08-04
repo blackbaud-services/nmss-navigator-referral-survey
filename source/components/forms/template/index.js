@@ -11,10 +11,8 @@ import UsePhone from '../../ui/UsePhone'
 import SurveyQuestion from '../../ui/SurveyQuestion'
 import { findQuestion, findQuestionByText, getPatientInfoSchema } from '../../../lib/survey'
 import { setModel } from '../../../store/formState'
-import { submitSurvey } from '../../../store/survey'
 
 const FormTemplate = ({
-  auth,
   form,
   formState: { additionalInfo, answers },
   isPatient,
@@ -23,13 +21,9 @@ const FormTemplate = ({
   prevUrl = '/',
   push,
   setModel,
-  submitSurvey,
-  submit,
-  survey,
   questions
 }) => {
   const [status, setStatus] = useState(null)
-  const [isLoading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [isDisabled, setDisabled] = useState([])
 
@@ -37,17 +31,6 @@ const FormTemplate = ({
     Promise.resolve()
       .then(() => setModel(data, pathname))
       .then(() => setStatus('success'))
-
-  const handleSubmit = () =>
-    Promise.resolve()
-      .then(() => setLoading(true))
-      .then(() => submitSurvey(answers, survey, auth))
-      .then(() => setLoading(false))
-      .then(() => push(nextUrl))
-      .catch(() => {
-        setLoading(false)
-        setStatus('fail')
-      })
 
   useEffect(() => {
     if (status === 'fail') {
@@ -65,10 +48,6 @@ const FormTemplate = ({
                   ? '/additional-contact'
                   : '/provider-info'
             )
-          break
-        case '/preferences':
-        case 'preferences':
-          handleSubmit()
           break
         default:
           push(nextUrl)
@@ -109,9 +88,7 @@ const FormTemplate = ({
     <Form
       form={form}
       onSubmit={handleSuccess}
-      isLoading={isLoading}
       action={{ label: 'Previous', to: prevUrl }}
-      submit={submit}
       serverErrors={errors}
     >
       <Grid spacing={{ x: 0.5, y: 0.25 }}>
@@ -139,13 +116,12 @@ const FormTemplate = ({
   )
 }
 
-const mapStateToProps = ({ auth, formState, survey }) => {
+const mapStateToProps = ({ formState, survey }) => {
   const referralModel = get(formState, 'model./referral-info')
   const keyId = findQuestionByText('/referral-info', 'personIs').id
   const isPatient = referralModel && referralModel[`${keyId}`] && referralModel[`${keyId}`].indexOf('Patient') !== -1
 
   return {
-    auth,
     formState,
     isPatient,
     survey
@@ -153,6 +129,6 @@ const mapStateToProps = ({ auth, formState, survey }) => {
 }
 
 export default compose(
-  connect(mapStateToProps, { setModel, submitSurvey }),
+  connect(mapStateToProps, { setModel }),
   withForm(form)
 )(FormTemplate)
