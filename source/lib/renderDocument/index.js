@@ -42,6 +42,7 @@ export const Document = ({
         type='application/json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(state) }}
       />
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.6/iframeResizer.contentWindow.min.js' />
       {scripts.map((script, index) => (
         <script key={index} src={script} />
       ))}
