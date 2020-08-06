@@ -11,7 +11,7 @@ const Intro = ({ intro }) => (
     {intro && (
       <SurveyQuestion type='Caption' label={intro.questionText} />
     )}
-    <Button tag={Link} to='/referral-info'>
+    <Button tag={Link} to='/referral-info' styles={{ marginTop: '1rem' }}>
       <span>Next</span>
       <Icon name='chevron' />
     </Button>

@@ -6,7 +6,7 @@ export default (
 ) => {
   const commonStyles = {
     root: {
-      // display: disabled && 'none',
+      display: disabled && 'none',
       maxWidth: type === 'YesNo' ? '100%' : breakpoints.xs
     },
     label: {

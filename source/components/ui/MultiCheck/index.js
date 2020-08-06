@@ -41,6 +41,12 @@ const MultiCheck = ({
         {label}
       </Label>
       {hint && <div className={classNames.hint}>{hint}</div>}
+      {error && (
+        <InputValidations
+          styles={{ root: styles.error }}
+          validations={validations}
+        />
+      )}
       {options.map(({ label, value }, index) => {
         const valueText = value
         return (
@@ -58,12 +64,6 @@ const MultiCheck = ({
           />
         )
       })}
-      {error && (
-        <InputValidations
-          styles={{ root: styles.error }}
-          validations={validations}
-        />
-      )}
     </div>
   )
 }

@@ -43,7 +43,7 @@ const SiteContainer = ({
               )}
               <Section
                 borderColor='grey'
-                borderWidth={5}
+                borderWidth={10}
                 margin={0}
               >
                 {children}
