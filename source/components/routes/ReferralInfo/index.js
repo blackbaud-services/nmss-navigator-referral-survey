@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import { connect } from 'react-redux'
 import FormTemplate from '../../forms/template'
 
-const ReferralInfo = ({ page, router }) => (
+const ReferralInfo = ({ page, router, ...props }) => (
   <FormTemplate {...page} {...router} nextUrl='/additional-info' />
 )
 

@@ -1,12 +1,11 @@
 import merge from 'lodash/merge'
 
 export default (
-  { currency, disabled, label, phone, styles, type },
+  { currency, label, phone, styles, type },
   { breakpoints, colors, mediaQuery, rhythm, scale, treatments }
 ) => {
   const commonStyles = {
     root: {
-      display: disabled && 'none',
       maxWidth: type === 'YesNo' ? '100%' : breakpoints.xs
     },
     label: {

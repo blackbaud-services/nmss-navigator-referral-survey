@@ -9,6 +9,7 @@ import Heading from 'constructicon/heading'
 import Section from 'constructicon/section'
 import Status from '../../ui/Status'
 import TraitsProvider from 'constructicon/traits-provider'
+import RouteTransition from '../../routes/RouteTransition'
 
 const SiteContainer = ({
   auth,
@@ -33,6 +34,7 @@ const SiteContainer = ({
 
   return (
     <TraitsProvider traits={traits}>
+      <RouteTransition />
       <Status status={status}>
         <FlashMessages />
         <Container width={35}>

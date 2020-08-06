@@ -79,7 +79,6 @@ const FormTemplate = ({
 
   useEffect(() => {
     const exists = find(questions, i => i.useReferral && i)
-
     if ((pathname === '/patient-info' || pathname === '/additional-contact') && !isPatient && !exists) {
       questions.splice(1, 0, { useReferral: true })
     }
