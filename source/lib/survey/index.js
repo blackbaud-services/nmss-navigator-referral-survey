@@ -64,6 +64,17 @@ export const surveyMap = {
       question: 'genderOther'
     },
     {
+      id: 409413,
+      col: false,
+      question: 'ethnicity'
+    },
+    {
+      id: 409415,
+      col: false,
+      question: 'ethnicityOther'
+    },
+
+    {
       id: 409371,
       col: false,
       question: 'isChild'
@@ -156,6 +167,16 @@ export const surveyMap = {
       id: 409305,
       col: true,
       question: 'genderOther'
+    },
+    {
+      id: 409416,
+      col: false,
+      question: 'ethnicity'
+    },
+    {
+      id: 409417,
+      col: false,
+      question: 'ethnicityOther'
     },
     {
       id: 409306,

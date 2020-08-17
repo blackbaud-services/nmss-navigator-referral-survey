@@ -1,7 +1,8 @@
 # NMSS Navigator Survey [![Build Status](https://travis-ci.com/blackbaud-services/nmss-navigator-referral-survey.svg?token=ndsoyNuX4LzdzVnawZqB&branch=master)](https://travis-ci.com/blackbaud-services/nmss-navigator-referral-survey)
 
 SPA using Luminate Online Survey API, deployed to AWS S3 and embedded in iframe on a PageBuilderPage:
-- [Iframe](https://secure.nationalmssociety.org/site/SPageServer?pagename=navigator_referral_survey)
+- [PageBuilder Iframe](https://secure.nationalmssociety.org/site/SPageServer?pagename=navigator_referral_survey)
+- [Survey in Luminate](https://secure3.convio.net/nmss/admin/SurveyAdmin?survey_id=94917&mfc_pref=T&action=edit_survey&survey=survey_page_edit)
 - [Hosted App](https://nmss-referral-survey.blackbaud-sites.com)
 
 This is a SPA survey, which first pulls the survey using the Luminate API. This allows NMSS staff to configure the survey in Luminate, we will then process the response to serve up a multi-screen SPA.
@@ -44,9 +45,6 @@ The development server will now be serving your app, and can be viewed at [http:
 
 Note that the development server will live re-load changes to your browser as you make changes to the codebase.
 
-### Getting started
-
-For more information about how we build sites, read [our documentation here](https://blackbaud-professional-services.github.io/services-engineering).
 
 
 ## Survey Setup
