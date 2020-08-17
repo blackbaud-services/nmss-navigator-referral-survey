@@ -6,7 +6,7 @@ import Button from 'constructicon/button'
 import Icon from 'constructicon/icon'
 import SurveyQuestion from '../../ui/SurveyQuestion'
 
-const Intro = ({ intro }) => (
+const Intro = ({ intro, router }) => (
   <>
     {intro && (
       <SurveyQuestion type='Caption' label={intro.questionText} />

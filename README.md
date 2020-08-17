@@ -1,6 +1,6 @@
 # NMSS Navigator Survey [![Build Status](https://travis-ci.com/blackbaud-services/nmss-navigator-referral-survey.svg?token=ndsoyNuX4LzdzVnawZqB&branch=master)](https://travis-ci.com/blackbaud-services/nmss-navigator-referral-survey)
 
-SPA using Luminate Online Survey API, deployed to AWS S3 and embedded in iframe:
+SPA using Luminate Online Survey API, deployed to AWS S3 and embedded in iframe on a PageBuilderPage:
 - [Iframe](https://secure.nationalmssociety.org/site/SPageServer?pagename=navigator_referral_survey)
 - [Hosted App](https://nmss-referral-survey.blackbaud-sites.com)
 
@@ -57,8 +57,12 @@ For more information about how we build sites, read [our documentation here](htt
 
 - You can add new questions or content (use caption questions to add text etc). However, we did not test all question types, only the ones currently used by NMSS (short text, mult choice, single dropdown, caption). This means additional work may need to be done for accomodating new question types.
 
-- A lot of the logic does depend on question ids (ie copying address or phone number, setting patient info from referral screen). New questions should not break the form, but won't be incorporated into any of the logic without a code change. Survey schema is manually added to the *lib -> survey* file. This is used for corss referecning and allows the app to discern field displays based on previous selections. If this is not kept up to do, then things like columns display, show/hide fields based on previous answers, and copying phone/address fields will not work.
+- A lot of the logic does depend on question ids (ie copying address or phone number, setting patient info from referral screen). New questions should not break the form, but won't be incorporated into any of the logic without a code change. Survey schema is manually added to the *lib -> survey* file. This is used for cross referecning and allows the app to discern field displays based on previous selections. If this is not kept up to do, then things like columns display, show/hide fields based on previous answers, and copying phone/address fields will not work.
 
-- Also, the order of the pages does have some significance, so changing the order of pages would require a code change. The additional info section and the last page before submission (preferences) definitely do need to stay in the same place since they have special logic and functions that occur on those steps.
+- The order of the pages does have some significance, so changing the order of pages would require a code change. The additional info section and the last page before submission (preferences) definitely do need to stay in the same place since they have special logic and functions that occur on those steps.
 
-- survey schema is manually added to the lib -> survey file. This is used for corss referecning and allows the app to discern field displays based on previous selections. If this is not kept up to do, then things like columns display, show/hide fields based on previous answers, and copying phone/address fields will not work.
+- survey schema is manually added to the *lib -> survey* file. This is used for cross referencing and allows the app to discern field displays based on previous selections. If this is not kept up to do, then things like columns display, show/hide fields based on previous answers, and copying phone/address fields will not work.
+
+# TO DO
+- add captcha
+

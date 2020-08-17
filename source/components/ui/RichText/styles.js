@@ -13,7 +13,7 @@ export default (
 
   const baseStyles = {
     fontSize: size ? scale(size) : scale(0.25),
-    lineHeight: 1.4,
+    lineHeight: 1.5,
     textAlign: align,
     ...calculateSpacing(spacing),
     '& h2': headingStyles(2.5),
@@ -23,7 +23,7 @@ export default (
     '& h6': headingStyles(0.5),
     '& > span > p': {
       marginBottom: rhythm(0.5),
-      lineHeight: 1.4
+      lineHeight: 1.5
     },
     '& a': {
       color: colors.primary,

@@ -6,10 +6,10 @@ import { initAnswers, getAuth, fetchSurvey } from '../../../store'
 import Container from 'constructicon/container'
 import FlashMessages from './FlashMessages'
 import Heading from 'constructicon/heading'
+import RouteTransition from './RouteTransition'
 import Section from 'constructicon/section'
 import Status from '../../ui/Status'
 import TraitsProvider from 'constructicon/traits-provider'
-import RouteTransition from '../../routes/RouteTransition'
 
 const SiteContainer = ({
   auth,
@@ -17,6 +17,7 @@ const SiteContainer = ({
   fetchSurvey,
   initAnswers,
   getAuth,
+  location: { key },
   survey: { status, surveyName }
 }) => {
   useEffect(() => {
@@ -34,21 +35,27 @@ const SiteContainer = ({
 
   return (
     <TraitsProvider traits={traits}>
-      <RouteTransition />
       <Status status={status}>
         <FlashMessages />
         <Container width={35}>
           {status === 'fetched' && (
             <>
               {surveyName && (
-                <Heading tag='h1' spacing={{ y: 1 }} children={surveyName} />
+                <Heading
+                  tag='h1'
+                  spacing={{ y: 1 }}
+                  children={surveyName}
+                />
               )}
               <Section
                 borderColor='grey'
                 borderWidth={10}
                 margin={0}
+                styles={{ overflow: 'hidden' }}
               >
-                {children}
+                <RouteTransition state={key}>
+                  {children}
+                </RouteTransition>
               </Section>
             </>
           )}
@@ -60,6 +67,4 @@ const SiteContainer = ({
 
 const mapStateToProps = ({ auth, survey }) => ({ auth, survey })
 
-export default connect(mapStateToProps, { initAnswers, getAuth, fetchSurvey })(
-  SiteContainer
-)
+export default connect(mapStateToProps, { initAnswers, getAuth, fetchSurvey })(SiteContainer)
