@@ -14,6 +14,7 @@ class RouteTransition extends Component {
   componentWillUpdate (nextProps) {
     // Trigger animation
     if (nextProps.state !== this.props.state) {
+      window.scrollTo(0, 0)
       this.setState({ animate: false })
       setTimeout(() => this.setState({ animate: true }), 500)
     }
