@@ -3,6 +3,7 @@ import { surveyMap } from '../../lib/survey'
 
 const c = {
   INIT_ANSWERS: 'app/formState/INIT_ANSWERS',
+  SET_MODE: 'app/formState/SET_MODE',
   SET_MODEL: 'app/formState/SET_MODEL',
   SET_INFO: 'app/formState/SET_INFO',
   SET_ANSWERS: 'app/formState/SET_ANSWERS'
@@ -16,6 +17,8 @@ export const initAnswers = questions => dispatch =>
       return obj
     }, {})
   })
+
+export const setMode = mode => dispatch => dispatch({ type: c.SET_MODE, payload: mode })
 
 export const setModel = (data, pathname) => dispatch => {
   const setInfo = pathname === '/additional-info'
@@ -70,18 +73,25 @@ export const setModel = (data, pathname) => dispatch => {
 
 export default (state = {}, { type, payload = {} }) => {
   switch (type) {
+    case c.INIT_ANSWERS: {
+      return {
+        ...state,
+        answers: {
+          ...payload
+        }
+      }
+    }
+    case c.SET_MODE: {
+      return {
+        ...state,
+        mode: payload.mode
+      }
+    }
     case c.SET_MODEL: {
       return {
         ...state,
         model: {
           ...state['model'],
-          ...payload
-        }
-      }
-    }
-    case c.INIT_ANSWERS: {
-      return {
-        answers: {
           ...payload
         }
       }

@@ -26,6 +26,7 @@ export const customValidators = {
 export const deserializeQuestions = ({ formState, location, questions }) => {
   const { pathname } = location
   const model = get(formState, `model[${pathname}]`)
+  const { mode } = formState
   const questionsArray = questions.map(
     ({
       questionId,
@@ -54,10 +55,10 @@ export const deserializeQuestions = ({ formState, location, questions }) => {
               : filter(options, i => i.value !== 'N/A')
             : null,
         initial: initialVal,
-        required: questionRequired === 'true' && true,
+        required: mode !== 'demo' && questionRequired === 'true' && true,
         questionHint,
         validators: [
-          questionRequired === 'true' &&
+          mode !== 'demo' && questionRequired === 'true' &&
             validators.required('This is a required field'),
           isPhone &&
             customValidators.phone('Please supply a valid phone number'),

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
 import * as traits from '../../../lib/traits'
-import { initAnswers, getAuth, fetchSurvey } from '../../../store'
+import { initAnswers, getAuth, fetchSurvey, setMode } from '../../../store'
 
 import Container from 'constructicon/container'
 import FlashMessages from './FlashMessages'
@@ -18,7 +19,8 @@ const SiteContainer = ({
   initAnswers,
   getAuth,
   location: { key },
-  survey: { status, surveyName }
+  survey: { status, surveyName },
+  setMode
 }) => {
   useEffect(() => {
     getAuth()
@@ -26,7 +28,10 @@ const SiteContainer = ({
 
   useEffect(() => {
     if (auth.status === 'fetched') {
+      const mode = typeof window === 'undefined' ? 'production' : get(window, 'name', 'production')
+
       Promise.resolve()
+        .then(() => setMode(mode))
         .then(() => fetchSurvey(auth))
         .then(({ surveyQuestions }) => initAnswers(surveyQuestions))
         .catch(error => console.error(error))
@@ -67,4 +72,11 @@ const SiteContainer = ({
 
 const mapStateToProps = ({ auth, survey }) => ({ auth, survey })
 
-export default connect(mapStateToProps, { initAnswers, getAuth, fetchSurvey })(SiteContainer)
+const mapDispatchToProps = {
+  initAnswers,
+  getAuth,
+  fetchSurvey,
+  setMode
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SiteContainer)
