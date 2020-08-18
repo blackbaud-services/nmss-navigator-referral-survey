@@ -84,7 +84,7 @@ export default (state = {}, { type, payload = {} }) => {
     case c.SET_MODE: {
       return {
         ...state,
-        mode: payload.mode
+        mode: payload
       }
     }
     case c.SET_MODEL: {
