@@ -10,11 +10,16 @@ export default (props, { rhythm, scale, treatments }) => ({
       ...treatments.label
     }
   },
+  options: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
   input: {
     root: {
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: 0
+      paddingLeft: 0,
+      paddingRight: rhythm(0.5)
     },
     label: {
       display: 'inline-block',

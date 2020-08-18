@@ -47,23 +47,25 @@ const MultiCheck = ({
           validations={validations}
         />
       )}
-      {options.map(({ label, value }, index) => {
-        const valueText = value
-        return (
-          <InputField
-            key={index}
-            autoComplete='nope'
-            type='checkbox'
-            name={`${id}_${index}`}
-            id={`${id}_${index}`}
-            label={label}
-            value={valueText}
-            onChange={val => handleClick(val, valueText)}
-            checked={checkboxes.indexOf(valueText) !== -1}
-            styles={styles.input}
-          />
-        )
-      })}
+      <div className={classNames.options}>
+        {options.map(({ label, value }, index) => {
+          const valueText = value
+          return (
+            <InputField
+              key={index}
+              autoComplete='nope'
+              type='checkbox'
+              name={`${id}_${index}`}
+              id={`${id}_${index}`}
+              label={label}
+              value={valueText}
+              onChange={val => handleClick(val, valueText)}
+              checked={checkboxes.indexOf(valueText) !== -1}
+              styles={styles.input}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }
