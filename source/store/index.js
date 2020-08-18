@@ -13,7 +13,7 @@ export * from './flashMessages'
 export * from './survey'
 
 const middleware =
-  process.env.NODE_ENV === 'production' ? [thunk] : [thunk, createLogger()]
+  process.env.NODE_ENV === 'production' ? [thunk, createLogger()] : [thunk, createLogger()]
 
 export default (initialState = {}) =>
   createStore(

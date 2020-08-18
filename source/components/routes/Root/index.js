@@ -28,7 +28,11 @@ const SiteContainer = ({
 
   useEffect(() => {
     if (auth.status === 'fetched') {
-      const mode = typeof window === 'undefined' ? 'production' : get(window, 'name', 'production')
+      const mode = typeof window === 'undefined' ? 'production' : get(window, 'name')
+      console.log(mode)
+      if (typeof window !== 'undefined') {
+        console.log(window, 'window')
+      }
 
       Promise.resolve()
         .then(() => setMode(mode))
