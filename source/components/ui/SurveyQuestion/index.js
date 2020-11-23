@@ -39,6 +39,7 @@ const SurveyQuestion = ({
       case 'NumericValue': {
         return 'number'
       }
+      case 'LargeTextValue':
       case 'TextValue': {
         return 'textarea'
       }

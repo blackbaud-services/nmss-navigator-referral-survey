@@ -13,10 +13,10 @@ const c = {
   SUBMIT_FAILURE: 'app/survey/SUBMIT_FAILURE'
 }
 
-export const fetchSurvey = ({ JSESSIONID, id, token }) => dispatch => {
+export const fetchSurvey = ({ JSESSIONID, id, token }, surveyId) => dispatch => {
   const params = {
     method: 'getSurvey',
-    survey_id: process.env.SURVEY_ID,
+    survey_id: surveyId,
     JSESSIONID,
     auth: token
   }
@@ -65,7 +65,7 @@ export const fetchSurvey = ({ JSESSIONID, id, token }) => dispatch => {
 export const submitSurvey = (answers, survey, { JSESSIONID, id, token }) => dispatch => {
   const params = {
     method: 'submitSurvey',
-    survey_id: process.env.SURVEY_ID,
+    survey_id: survey.surveyId,
     JSESSIONID,
     auth: token,
     ...defaultParams,

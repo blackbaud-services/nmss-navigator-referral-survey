@@ -18,7 +18,7 @@ const SiteContainer = ({
   fetchSurvey,
   initAnswers,
   getAuth,
-  location: { key },
+  location: { key, query },
   survey: { status, surveyName },
   setMode
 }) => {
@@ -29,10 +29,10 @@ const SiteContainer = ({
   useEffect(() => {
     if (auth.status === 'fetched') {
       const mode = typeof window === 'undefined' ? 'production' : get(window, 'name')
-
+      const surveyId = query.surveyId ? query.surveyId : process.env.SURVEY_ID
       Promise.resolve()
         .then(() => setMode(mode))
-        .then(() => fetchSurvey(auth))
+        .then(() => fetchSurvey(auth, surveyId))
         .then(({ surveyQuestions }) => initAnswers(surveyQuestions))
         .catch(error => console.error(error))
     }

@@ -19,6 +19,12 @@ export const formatPhone = (phone, country) => {
   return number.replace('+', '')
 }
 
+export const setColumn = type => {
+  if (type === 'MultiSingle' || type === 'ShortTextValue' || type === 'ComboChoice') {
+    return true
+  }
+}
+
 export const customValidators = {
   phone: msg => val => val && isPhoneInvalid(val) && msg
 }

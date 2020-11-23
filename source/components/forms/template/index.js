@@ -88,7 +88,7 @@ const FormTemplate = ({
     <Form
       form={form}
       onSubmit={handleSuccess}
-      action={{ label: 'Previous', to: prevUrl }}
+      action={prevUrl && { label: 'Previous', to: prevUrl }}
       serverErrors={errors}
     >
       <Grid spacing={{ x: 0.5, y: 0.25 }}>
