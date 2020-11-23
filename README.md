@@ -46,7 +46,6 @@ The development server will now be serving your app, and can be viewed at [http:
 Note that the development server will live re-load changes to your browser as you make changes to the codebase.
 
 
-
 ## Survey Setup
 
 - Content and order of the questions and answers are set in Survey Config in Luminate. You can set fields as required or not on any page. Each page is separated by a hidden text question with the values Page-1, Page 2 etc. This is how we are controlling which questions are in which screen.
@@ -60,6 +59,10 @@ Note that the development server will live re-load changes to your browser as yo
 - The order of the pages does have some significance, so changing the order of pages would require a code change. The additional info section and the last page before submission (preferences) definitely do need to stay in the same place since they have special logic and functions that occur on those steps.
 
 - survey schema is manually added to the *lib -> survey* file. This is used for cross referencing and allows the app to discern field displays based on previous selections. If this is not kept up to do, then things like columns display, show/hide fields based on previous answers, and copying phone/address fields will not work.
+
+## Use with One Page Surveys
+Can use this same app with other surveys and make a 1 page survey using same styles and functionality:
+[https://nmss-referral-survey.blackbaud-sites.com?surveyId=95315&onePage=true](https://nmss-referral-survey.blackbaud-sites.com?surveyId=95315&onePage=true)
 
 # TO DO
 - add captcha
