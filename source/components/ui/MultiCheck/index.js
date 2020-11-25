@@ -50,6 +50,8 @@ const MultiCheck = ({
       <div className={classNames.options}>
         {options.map(({ label, value }, index) => {
           const valueText = value
+          const checkboxArray = checkboxes && checkboxes.split('*')
+          const isChecked = checkboxArray.indexOf(valueText) !== -1
           return (
             <InputField
               key={index}
@@ -60,7 +62,7 @@ const MultiCheck = ({
               label={label}
               value={valueText}
               onChange={val => handleClick(val, valueText)}
-              checked={checkboxes.indexOf(valueText) !== -1}
+              checked={isChecked}
               styles={styles.input}
             />
           )
